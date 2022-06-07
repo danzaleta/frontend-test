@@ -1,5 +1,9 @@
 # Frontend test para Tendencys
-## Destacado
+
+## LIVE DEMO: 
+https://tendencys-test.netlify.app/
+
+## 1. Destacado
 
 - Integración con Webpack
 - Uso de Sass
@@ -8,8 +12,8 @@
 - Confirmación de pago
 
 
-
-## Conoce mi trabajo en progreso!
+---
+## 2. Conoce mi trabajo en progreso!
 
 Yard Sale: https://next-yard-sale.vercel.app/
 
