@@ -56,8 +56,9 @@ const Checkout = () => {
                         <Product item={item} key={index} />
                     ))}
                 </div>
-                <Button variant='warning' size="lg" onClick={() => { setShowBuy(true) }}>Buy products</Button>
+                <Button className="buyBtn" variant='warning' size="lg" onClick={() => { setShowBuy(true) }}>Buy products</Button>
             </div>
+
             <Modal
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
