@@ -1,11 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import AppContext from '@context/AppContext';
 import Product from '@components/Product';
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import '@styles/Checkout.scss';
 
-const Checkout = ({ products }) => {
-    const [show, setShow] = useState(false);
+const Checkout = () => {
+    const { orders, AddProduct } = useContext(AppContext);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [index, setIndex] = useState(0);
+    const [showForm, setShowForm] = useState(false);
+    const [showBuy, setShowBuy] = useState(false);
     const [validated, setValidated] = useState(false);
+
+    useEffect(() => {
+        setIndex(location.state.index);
+    }, [])
+
+    const formRef = useRef(null);
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -15,86 +29,91 @@ const Checkout = ({ products }) => {
             event.stopPropagation();
             setValidated(true);
         } else {
-            setShow(false);
+            const formData = new FormData(event.target);
+            const formEntries = Object.fromEntries(formData.entries());
+            const data = {
+                sku: formEntries.sku,
+                name: formEntries.name,
+                quantity: formEntries.quantity,
+                price: formEntries.price
+            }
+            AddProduct(data, index);
+            setShowForm(false);
             setValidated(false);
         }
     };
 
     return (
         <div className='Checkout'>
-            <h1 className='mt-5 mb-5'><a href='/'>ORDERS</a> / CHECKOUT</h1>
-            <p className='orderNum'>{`Order N.`}</p>
+            <h1 className='mt-5 mb-5'><p className='toHome' onClick={() => navigate('/')}>ORDERS</p>/ CHECKOUT</h1>
+            <p className='orderNum'>{`Order N. ${orders[index]?.number}`}</p>
             <div className='container'>
-                <Button variant="outline-secondary" size="lg" onClick={() => setShow(true)}>
+                <Button variant="outline-secondary" size="lg" onClick={() => setShowForm(true)}>
                     +
                 </Button>
                 <div className='products'>
-                    {products?.items.map((item, index) => (
+                    {orders[index]?.items.map((item, index) => (
                         <Product item={item} key={index} />
                     ))}
-                    <Product item={[]} />
-                    <Product item={[]} />
-                    <Product item={[]} />
-                    <Product item={[]} />
-                    <Product item={[]} />
-                    <Product item={[]} />
-                    <Product item={[]} />
-                    <Product item={[]} />
                 </div>
-                <Button className='' variant='warning' size="lg">Buy products</Button>
+                <Button variant='warning' size="lg" onClick={() => { setShowBuy(true) }}>Buy products</Button>
             </div>
             <Modal
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
-                show={show}
+                show={showForm}
             >
-                <Modal.Header closeButton onClick={() => setShow(false)}>
+                <Modal.Header closeButton onClick={() => setShowForm(false)}>
                     <Modal.Title id="contained-modal-title-vcenter">
                         Add new product
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                    <Form noValidate validated={validated} onSubmit={handleSubmit} ref={formRef}>
                         <Row className="mb-3">
 
-                            <Form.Group as={Col} md="8" controlId="validationCustom01">
-                                <Form.Label>Name</Form.Label>
+                            <Form.Group as={Col} md="8">
+                                <Form.Label htmlFor="name">Name</Form.Label>
                                 <Form.Control
                                     required
                                     type="text"
                                     placeholder="Name"
+                                    name="name"
                                 />
 
                             </Form.Group>
 
-                            <Form.Group as={Col} md="4" controlId="validationCustom02">
-                                <Form.Label>SKU</Form.Label>
+                            <Form.Group as={Col} md="4">
+                                <Form.Label htmlFor="sku">SKU</Form.Label>
                                 <Form.Control
                                     required
                                     type="text"
                                     placeholder="SKU"
+                                    name="sku"
                                 />
 
                             </Form.Group>
 
                         </Row>
                         <Row className="mb-3">
-                            <Form.Group as={Col} md="6" controlId="validationCustom03">
-                                <Form.Label>Quantity</Form.Label>
+                            <Form.Group as={Col} md="6">
+                                <Form.Label htmlFor="quantity">Quantity</Form.Label>
                                 <Form.Control
                                     required
-                                    type="text"
+                                    type="number"
                                     placeholder="Quantity"
+                                    name="quantity"
                                 />
                             </Form.Group>
 
-                            <Form.Group as={Col} md="6" controlId="validationCustom04">
-                                <Form.Label>Price</Form.Label>
+                            <Form.Group as={Col} md="6">
+                                <Form.Label htmlFor="price">Price</Form.Label>
                                 <Form.Control
                                     required
-                                    type="text"
+                                    type="number"
                                     placeholder="Price"
+                                    name="price"
                                 />
                             </Form.Group>
                         </Row>
@@ -103,6 +122,28 @@ const Checkout = ({ products }) => {
                     </Form>
                 </Modal.Body>
             </Modal>
+
+            <Modal
+                size="sm"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                show={showBuy}
+                className="buyModal"
+            >
+                <Modal.Header closeButton onClick={() => setShowBuy(false)}>
+                    <Modal.Title className="modalText" id="contained-modal-title-vcenter">
+                        Thank you!
+                    </Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body className=''>
+                    <div className='smile'>
+                        <h1>{`:)`}</h1>
+                    </div>
+                    <p>{`You bought ${orders[index]?.items.length} products`}</p>
+                </Modal.Body>
+            </Modal>
+
         </div>
     );
 };
