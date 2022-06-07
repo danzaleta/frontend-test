@@ -1,0 +1,18 @@
+@import 'vars';
+
+.Product {
+    background-color: $text-input-field;
+    padding: 10px;
+    border-radius: 10px;
+
+    h3{
+        font-size: $lg;
+        margin: 0;
+    }
+    p{
+        color: $dark;
+        font-size: $sm;
+        margin: 0;
+    }
+}
+

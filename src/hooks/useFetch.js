@@ -13,7 +13,6 @@ const useFetch = (API, TOKEN) => {
     const fetchData = async () => {
         const response = await axios.get(API, config);
         setData(response.data.orders);
-        console.log(response.data.orders);
     }
 
     useEffect(() => {

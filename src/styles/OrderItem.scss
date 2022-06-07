@@ -1,0 +1,23 @@
+@import 'vars';
+
+.OrderItem {
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    align-items: center;
+    box-shadow: 0 6px 12px -2px rgb(50 50 93 / 25%), 0 3px 7px -3px rgb(0 0 0 / 30%);
+
+    h2{
+        color: $dark;
+        font-size: $lg;
+        margin: 0;
+    }
+
+    p{
+        color: $dark-yellow;
+        font-size: $sm;
+        margin: 0;
+    }
+}

@@ -4,4 +4,4 @@
 
 - Webpack
 - Sass
-- Bootstrap | TailwindCSS
+- React Bootstrap

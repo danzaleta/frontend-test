@@ -1,0 +1,30 @@
+@import 'vars';
+
+.Orders {
+    width: 100%;
+    place-items: center;
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+        font-size: $lg;
+        font-weight: bold;
+    }
+
+    
+
+    .container {
+        place-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+@media(max-width: 640px) {
+    .Orders {
+        .container {
+            place-items: unset;
+        }
+    }
+}

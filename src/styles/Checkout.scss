@@ -1,0 +1,50 @@
+@import 'vars';
+
+.Checkout {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    box-sizing: border-box;
+
+    h1 {
+        font-size: $lg;
+        font-weight: bold;
+
+        a {
+            text-decoration: none;
+            color: $dark-yellow;
+        }
+    }
+
+    .orderNum{
+        font-size: $md;
+        color: $dark;
+    }
+
+    .container {
+        width: 420px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .products {
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+    }
+}
+
+@media(max-width: 640px) {
+    .Checkout {
+        .container {
+            width:100%;
+            place-items: unset;
+        }
+    }
+}
