@@ -8,6 +8,7 @@ https://tendencys-test.netlify.app/
 - Integración con Webpack
 - Uso de Sass
 - Integración de React Bootstrap
+- Responsive
 - Verificación de campos de formulario
 - Confirmación de pago
 
